@@ -16,7 +16,7 @@ function getOppositeColor(hexColor) {
   const invG = 255 - g;
   const invB = 255 - b;
   const toHex = (c) => {
-      const hex = c.toString(16);
+      const hex = c.toString(16).toUpperCase(); // Convert to uppercase
       return hex.length === 1 ? '0' + hex : hex;
   };
   
@@ -47,10 +47,27 @@ async function copyHexToClipboard() {
   }
 }
 
+async function copyFGHexToClipboard() { 
+  const fgColor = getComputedStyle(document.documentElement).getPropertyValue('--opposite-color').trim();
+  
+  try {
+      await navigator.clipboard.writeText(fgColor);
+  } catch (err) {
+      console.error('Failed to copy: ', err);
+      const textarea = document.createElement('textarea');
+      textarea.value = fgColor;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+  }
+}
+
 let currentColor;
 
 document.addEventListener('DOMContentLoaded', () => {
   setRandomColor();
   document.getElementById('changeColor').addEventListener('click', setRandomColor);
-  document.getElementById('copyHex').addEventListener('click', copyHexToClipboard);
+  document.getElementById('copyBGHex').addEventListener('click', copyHexToClipboard);
+  document.getElementById('copyFGHex').addEventListener('click', copyFGHexToClipboard);
 });
