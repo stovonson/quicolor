@@ -33,39 +33,43 @@ function setRandomColor() {
   currentColor = newColor;
 }
 
-async function copyHexToClipboard() {
+async function requestClipboardPermissions() {
   try {
-      await navigator.clipboard.writeText(currentColor);
+    await navigator.clipboard.writeText('');
+    console.log('Clipboard permissions granted.');
+    return true
   } catch (err) {
-      console.error('Failed to copy: ', err);
-      const textarea = document.createElement('textarea');
-      textarea.value = currentColor;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
+    console.error('Clipboard permissions denied:', err);
+    return false
   }
+}
+
+async function copyTextToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log(`Copied to clipboard: ${text}`);
+  } catch (err) {
+      console.error("Failed to copy: ", err);
+      const granted = await requestClipboardPermissions();
+      if(granted){
+        copyTextToClipboard(text)
+      }
+  }
+}
+
+async function copyHexToClipboard() {
+  copyTextToClipboard(currentColor);
 }
 
 async function copyFGHexToClipboard() { 
   const fgColor = getComputedStyle(document.documentElement).getPropertyValue('--opposite-color').trim();
-  
-  try {
-      await navigator.clipboard.writeText(fgColor);
-  } catch (err) {
-      console.error('Failed to copy: ', err);
-      const textarea = document.createElement('textarea');
-      textarea.value = fgColor;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-  }
+  copyTextToClipboard(fgColor);
 }
 
 let currentColor;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async() => {
+  await requestClipboardPermissions();
   setRandomColor();
   document.getElementById('changeColor').addEventListener('click', setRandomColor);
   document.getElementById('copyBGHex').addEventListener('click', copyHexToClipboard);
