@@ -36,7 +36,6 @@ function setRandomColor() {
 async function copyHexToClipboard() {
   try {
       await navigator.clipboard.writeText(currentColor);
-      alert('Copied to clipboard: ' + currentColor);
   } catch (err) {
       console.error('Failed to copy: ', err);
       const textarea = document.createElement('textarea');
@@ -45,7 +44,6 @@ async function copyHexToClipboard() {
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      alert('Copied to clipboard: ' + currentColor);
   }
 }
 
