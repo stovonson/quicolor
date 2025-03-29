@@ -62,5 +62,15 @@ button:hover::before {
 
 .footer {
     margin-top: 10px;
-    color: var(--opposite-color);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    a {
+        color: var(--opposite-color);
+        text-decoration: none;
+    }
+    p {
+        user-select: none;
+    }
 }
