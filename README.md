@@ -1,15 +1,15 @@
-# Quicolor
+# 🌈 Quicolor
 
 **Get a random hex color code.** Good for prototyping/placeholders/general web design.
 
-## Roadmap
+## 🛣️ Roadmap
 
-### Upcoming
+### 🤔 Upcoming
 
 - "Post on -" buttons
 - Better UI
 
-### Completed
+### ✅ Completed
 
 - Add Product Hunt button
 - Make Quicolor v1
