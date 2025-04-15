@@ -13,3 +13,5 @@
 
 - Add Product Hunt button
 - Make Quicolor v1
+
+Icons by [iconading](https://www.flaticon.com/authors/iconading).
